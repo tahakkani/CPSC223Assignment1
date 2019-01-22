@@ -14,7 +14,7 @@ Queue::Queue() : front(0), back(MAX_QUEUE-1), count(0)
 
 bool Queue::isEmpty()
 {
-  if(count == 0)
+  if(count < 1)
     return true;
   return false;
 }  // end isEmpty
@@ -44,12 +44,16 @@ void Queue::dequeue()
 		cout << "Queue is empty";
 	else{
 		front = (front + 1) % MAX_QUEUE;
+		count --;
 	}
 }  // end dequeue
 
 QueueItemType Queue::getFront()
 {
-	return items[front];
+	if(!isEmpty())
+		return items[front];
+	else
+	  cout << "Queue is empty";
 }  // end getFront
 // End of implementation file.
 
