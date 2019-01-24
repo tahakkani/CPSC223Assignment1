@@ -1,4 +1,10 @@
-/** @file PQueue.h */
+/**
+* @author Taha Hakkani
+* @credit Yanping Zhang (for template)
+* @version Assignment 1
+* @date January 22 2019
+* @file QueueA.h
+*/
 
 #include "QueueA.h"
 

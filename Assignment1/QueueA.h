@@ -1,6 +1,10 @@
-/** @file QueueA.h */
-
-//#include "QueueException.h"
+/**
+* @author Taha Hakkani
+* @credit Yanping Zhang (for template)
+* @version Assignment 1
+* @date January 22 2019
+* @file QueueA.h
+*/
 #ifndef QUEUEA_H
 #define QUEUEA_H
 //const int MAX_QUEUE = maximum-size-of-queue;
@@ -25,6 +29,7 @@ public:
    virtual void enqueue(QueueItemType& newItem);
    void dequeue();
    QueueItemType getFront();
+   QueueItemType returnFront();
 
 protected:
    QueueItemType items[MAX_QUEUE];

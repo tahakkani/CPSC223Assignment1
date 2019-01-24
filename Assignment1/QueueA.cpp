@@ -1,8 +1,14 @@
-/** @file QueueA.cpp
- * Circular array-based implementation.
- * The array has indexes to the front and back of the
- * queue. A counter tracks the number of items currently
- * in the queue. */
+/**
+* @author Taha Hakkani
+* @credit Yanping Zhang (for template)
+* @version Assignment 1
+* @date January 22 2019
+* @file QueueA.h
+
+* Circular array-based implementation.
+* The array has indexes to the front and back of the
+* queue. A counter tracks the number of items currently
+* in the queue. */
 
 #include "QueueA.h"  // header file
 #include <iostream>
@@ -24,7 +30,7 @@ bool Queue::isFull()
 	if(count < MAX_QUEUE)
 		return false;
 	return true;
-}
+} // end isFull
 
 void Queue::enqueue(QueueItemType& newItem)
 {
@@ -41,19 +47,33 @@ void Queue::enqueue(QueueItemType& newItem)
 void Queue::dequeue()
 {
 	if(isEmpty())
-		cout << "Queue is empty";
+		cout << "Queue is empty\n";
 	else{
 		front = (front + 1) % MAX_QUEUE;
 		count --;
 	}
 }  // end dequeue
 
+//retreives the item at the front of the queue (in conjuction with returnFront(), handles exception in the case that the queue is empty
 QueueItemType Queue::getFront()
 {
-	if(!isEmpty())
-		return items[front];
-	else
-	  cout << "Queue is empty";
-}  // end getFront
+	try{
+		returnFront();
+	}
+	catch (string a){
+		cout << a;
+	}
+	  
+} // end getFront
+
+// handles the exception, throws an error message if the queue is empty
+QueueItemType Queue::returnFront()
+{
+	if(isEmpty()){
+		string exceptString = "ERROR: The queue is empty\n";
+		throw exceptString;
+	}
+	  return items[front];
+}
 // End of implementation file.
 
