@@ -21,19 +21,23 @@ int main()
 	srand((unsigned)time(0));
 	int iter = 0; //tracks how many times the pointer changes
 	do{
-    for(int i = 0; i < MAX_QUEUE; i++){
-		  QueueItemType item = rand() % 100;
-		  qptr->enqueue(item);
-  	}
-  	if(qptr->isFull())
-  		cout << "Queue is full\n";
-  	for(int i = 0; i < MAX_QUEUE; i++){
-  		cout << qptr->getFront() << "  ";
- 	    qptr->dequeue();
-  	}
-  	if(qptr->isEmpty())
-  		cout << "\nQueue is empty\n";
-  	iter ++;
-  	qptr = &pQ;
+		//Fills the queue with integers
+    		for(int i = 0; i < MAX_QUEUE; i++){
+			QueueItemType item = rand() % 100;
+		  	qptr->enqueue(item);
+  		}
+		//Checks to see if isFull function works
+  		if(qptr->isFull())
+  			cout << "Queue is full\n";
+		//Removes integers from the queue
+  		for(int i = 0; i < MAX_QUEUE; i++){
+  			cout << qptr->getFront() << "  ";
+ 	  		qptr->dequeue();
+  		}
+		//checks to see if isEmpty function works
+  		if(qptr->isEmpty())
+  			cout << "\nQueue is empty\n";
+  		iter ++; //increases iteration
+  		qptr = &pQ; //changes to priority queue
 	}while(iter < 2);
 }
