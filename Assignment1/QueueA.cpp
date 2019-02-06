@@ -18,62 +18,46 @@ Queue::Queue() : front(0), back(MAX_QUEUE-1), count(0)
 {
 }  // end default constructor
 
-bool Queue::isEmpty()
+bool Queue::isEmpty() const
 {
   if(count < 1)
     return true;
   return false;
 }  // end isEmpty
 
-bool Queue::isFull()
+bool Queue::isFull() const
 {
 	if(count < MAX_QUEUE)
 		return false;
 	return true;
 } // end isFull
 
-void Queue::enqueue(QueueItemType& newItem)
+void Queue::enqueue(QueueItemType& newItem) throw (QueueException)
 {
   if(isFull())
-		cout << "Queue is full";
-	else{
-		back = (back + 1) % MAX_QUEUE;
-		items[back] = newItem;
-		count++;
-	}
+		throw QueueException("Queue::enqueue says: 'All full asshat! sucks to suck!'");
+	back = (back + 1) % MAX_QUEUE;
+	items[back] = newItem;
+  count++;
+
 
 }  // end enqueue
 
-void Queue::dequeue()
+void Queue::dequeue() throw (QueueException)
 {
 	if(isEmpty())
-		cout << "Queue is empty\n";
-	else{
-		front = (front + 1) % MAX_QUEUE;
-		count --;
-	}
+		throw QueueException("Queue::dequeue() says: 'This queue is empty, dummy!'");
+  front = (front + 1) % MAX_QUEUE;
+	count --;
 }  // end dequeue
 
 //retreives the item at the front of the queue (in conjuction with returnFront(), handles exception in the case that the queue is empty
-QueueItemType Queue::getFront()
+QueueItemType Queue::getFront() const throw (QueueException)
 {
-	try{
-		returnFront();
-	}
-	catch (string a){
-		cout << a;
-	}
-	  
+	if(isEmpty())
+		throw QueueException("Queue::getFront() says: 'The queue is empty loser, try again!'");
+	return items[front];
 } // end getFront
 
-// handles the exception, throws an error message if the queue is empty
-QueueItemType Queue::returnFront()
-{
-	if(isEmpty()){
-		string exceptString = "ERROR: The queue is empty\n";
-		throw exceptString;
-	}
-	  return items[front];
-}
 // End of implementation file.
 

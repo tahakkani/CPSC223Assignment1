@@ -7,7 +7,7 @@
 */
 
 #include "QueueA.h"
-
+#include "QueueException.h"
 #ifndef PRIORITYQUEUEA_H
 #define PRIORITYQUEUEA_H
 
@@ -21,7 +21,7 @@ public:
    /** Default constructor. */
    PriorityQueue();
 
-   void enqueue(QueueItemType& newItem);
+   void enqueue(QueueItemType& newItem) throw (QueueException);
 
 
 }; // end Queue

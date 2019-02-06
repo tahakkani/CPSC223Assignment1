@@ -5,6 +5,7 @@
 * @date January 22 2019
 * @file QueueA.h
 */
+#include "QueueException.h"
 #ifndef QUEUEA_H
 #define QUEUEA_H
 //const int MAX_QUEUE = maximum-size-of-queue;
@@ -24,12 +25,11 @@ public:
    // supplied by the compiler
 
 // Queue operations:
-   bool isEmpty();
-   bool isFull();
-   virtual void enqueue(QueueItemType& newItem);
-   void dequeue();
-   QueueItemType getFront();
-   QueueItemType returnFront();
+   bool isEmpty() const;
+   bool isFull() const;
+   virtual void enqueue(QueueItemType& newItem) throw (QueueException);
+   void dequeue() throw (QueueException);
+   QueueItemType getFront() const throw (QueueException);
 
 protected:
    QueueItemType items[MAX_QUEUE];

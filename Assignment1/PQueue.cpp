@@ -21,10 +21,10 @@ PriorityQueue::PriorityQueue()
 }  // end default constructor
 
 
-void PriorityQueue::enqueue(QueueItemType& newItem)
+void PriorityQueue::enqueue(QueueItemType& newItem) throw (QueueException)
 {
 	if(isFull())
-		cout << "Queue is full";
+		throw QueueException("PriorityQueue::enqueue says: 'Queue is full, try again later!'");
 	else if(isEmpty()){
 		back = (back + 1) % MAX_QUEUE;
 		items[back] = newItem;
@@ -43,7 +43,7 @@ void PriorityQueue::enqueue(QueueItemType& newItem)
 	count++;
 	back = (back + 1) % MAX_QUEUE;
 	}
-	
+
 }  // end enqueue
 
 
