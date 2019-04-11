@@ -14,13 +14,11 @@ using namespace std;
    // *  pre for all member functions: binary search tree object exists
    // *****************************************************************
 
-   //@searches for a key in a binary search tree object and
-   //    retrieves the corresponding item
-   //@pre: key has been assigned.
-   //@post: theItem contains tkey with rest of the item if
-   //    tkey is found in the binary search tree object
-   //    else an exception is thrown
-   //@usage: bst.Retrieve (abbrev, meaning);
+   //@recursively searches for an ItemType in a binary search tree object and
+   //    retrieves it
+   //@pre: ItemType has been assigned.
+   //@post:If ItemType is in the binary tree, return true, else return false
+   //@usage: bst.Search (myItem);
    bool BinarySearchTree::Search (const ItemType& theItem) const{
 		lookup(mroot, theItem);
 	}
@@ -35,7 +33,9 @@ using namespace std;
    void BinarySearchTree::Insert (const ItemType& newItem){
    	insertItem(mroot, newItem);
 	}
-//   void BinarySearchTree::remove (const ItemType& theItem);
+   void BinarySearchTree::remove (const ItemType& theItem){
+   	removeItem(mroot, theItem);
+	}
    Node * BinarySearchTree::FindMin() const{
 		lookforMin(mroot);
 	}
@@ -45,10 +45,10 @@ using namespace std;
 
 // recursive helper functions
    //@recursively searches (modeling on binary search) for an item
-   //@pre: treeptr is assigned. newItem is assigned.
+   //@pre: treeptr is assigned. theItem is assigned.
    //@post: searches for the item in the tree with treeptr's root.
    //    If theItem is found, return true, else false.
-   //@usage: retrieveItem (mroot, rest);
+   //@usage: lookup (mroot, rest);
    bool BinarySearchTree::lookup (Node * treeptr, const ItemType& theItem) const{
    	if(!treeptr)
 			return false;
@@ -56,7 +56,7 @@ using namespace std;
 			return true;
 		else if(theItem <= treeptr->mitem)
 			lookup(treeptr->mleftptr, theItem);
-		else
+		else if(theItem > treeptr->mitem)
 			lookup(treeptr->mrightptr, theItem);
 	}
 
@@ -69,7 +69,24 @@ using namespace std;
 		else
 			insertItem(treeptr->mrightptr, newItem);
 	}
-//   void BinarySearchTree::removeItem (Node *& treeptr, const ItemType& theItem);
+   void BinarySearchTree::removeItem (Node *& treeptr, const ItemType& theItem){
+   	if(theItem < treeptr->mitem)
+   		removeItem(treeptr->mleftptr, theItem);
+		else if(theItem > treeptr->mitem)
+			removeItem(treeptr->mrightptr, theItem);
+		//The following cases, removeItem has found the node to be deleted
+		else if(treeptr->mrightptr && treeptr->mleftptr){ //node to be deleted has two children
+			Node *temp = treeptr->mleftptr; cout << "1";
+			Node *del = treeptr; cout << "2";
+			treeptr = treeptr->mrightptr; cout << "3";
+			lookforMin(treeptr)->mleftptr = temp; cout << "4";
+			delete del;
+		}
+		else if(!treeptr->mleftptr)
+			treeptr = treeptr->mrightptr;
+		else
+			treeptr = treeptr->mleftptr;
+	}
 
 	////////////////////////////////////////////////////////
 	//used in FindMin()/FindMax() and removeItem
@@ -78,14 +95,14 @@ using namespace std;
 	//usage: lookforMin(treeptr); lookforMax(treeptr);
    Node * BinarySearchTree::lookforMin(Node * treeptr) const{
 		Node * finder = treeptr;
-		while(finder)
+		while(finder->mleftptr)
 			finder = finder->mleftptr;
 		return finder;
 	}
 	
    Node * BinarySearchTree::lookforMax(Node * treeptr) const{
 		Node * finder = treeptr;
-		while(finder)
+		while(finder->mrightptr)
 			finder = finder->mrightptr;
 		return finder;
 	}

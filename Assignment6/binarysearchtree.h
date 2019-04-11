@@ -52,7 +52,7 @@ public:
    //       else an exception is thrown
    //@usage: you do
    void Insert (const ItemType& newItem);
-//   void remove (const ItemType& theItem);
+   void remove (const ItemType& theItem);
    Node * FindMin() const;
    Node * FindMax() const;
 
@@ -67,7 +67,7 @@ protected:  // recursive helper functions
 
    // write the documentation
    void insertItem (Node *& treeptr, const ItemType& newItem);
-//   void removeItem (Node *& treeptr, const ItemType& theItem);
+   void removeItem (Node *& treeptr, const ItemType& theItem);
    
    Node * lookforMin(Node * treeptr) const;
    Node * lookforMax(Node * treeptr) const;

@@ -52,6 +52,7 @@ using namespace std;
    void BinaryTree::PrettyDisplay() const{
    	int level = 0;
 		pDHelper(level, mroot);
+		cout << endl << endl;
 	}
 	
 
