@@ -169,29 +169,56 @@ using namespace std;
 			insertItem(treeptr->rightP, newItem);
 			setHeight(treeptr);
 		}
-		//if(!isBalanced(treeptr))
-		////check which side is heavy
-		////rotate with that side
-		
+		if(abs(getBal(treeptr)) > 1){
+			if(getBal(treeptr) < 0){
+				if(getBal(treeptr->leftP) < 0){
+					treeptr = rotateWithLeftP(treeptr);
+				}
+				else{
+					treeptr = doubleRotateWithLeftP(treeptr);
+				}
+			}
+			else if(getBal(treeptr->rightP) > 0)
+					treeptr = rotateWithRightP(treeptr);
+				else
+					treeptr = doubleRotateWithRightP(treeptr);
+		}
 	}
+	int AVLTree::getBal(AVLNode *node) const{
+		int l,r;
+		if(node->leftP)
+			l = node->leftP->height;
+		else
+			l = -1;
+		if(node->rightP)
+			r = node->rightP->height;
+		else
+			r = -1;
+		return (r - l);
+	}
+
 	//update height on the following functions
-	Node* AVLTree::rotateWithLeftP(Node* k2){
-		 Node* k1 = k2->leftP;
+	AVLNode* AVLTree::rotateWithLeftP(AVLNode* k2){
+		 AVLNode* k1 = k2->leftP;
 		 k2->leftP = k1->rightP;
 		 k1->rightP = k2;
+		 setHeight(k2);
+		 setHeight(k1);
 		 return k1;
 	}
-   Node* AVLTree::rotateWithRightP(Node* k2){
-		 Node * k2 = k1->rightP;
+   AVLNode* AVLTree::rotateWithRightP(AVLNode* k1){
+		 AVLNode * k2 = k1->rightP;
 		 k1->rightP = k2->leftP;
 		 k2->leftP = k1;
+		 setHeight(k1);
+		 setHeight(k2);
 		 return k2;
 	}
-   Node* AVLTree::doubleRotateWithLeftP(Node* k3){
+   AVLNode* AVLTree::doubleRotateWithLeftP(AVLNode* k3){
 		 k3->leftP = rotateWithRightP(k3->leftP);
 		 return rotateWithLeftP(k3);
 	}
-   Node* AVLTree::doubleRotateWithRightP(Node* k1){
+   AVLNode* AVLTree::doubleRotateWithRightP(AVLNode* k1){
 		 k1->rightP = rotateWithLeftP(k1->rightP);
 		 return rotateWithRightP(k1);
 	}
@@ -202,8 +229,10 @@ using namespace std;
 			treeptr->height = max(treeptr->leftP->getHeight(), treeptr->rightP->getHeight()) + 1;
 		else if(treeptr->leftP)
 			treeptr->height = treeptr->leftP->height + 1;
-		else
+		else if(treeptr->rightP)
 			treeptr->height = treeptr->rightP->height + 1;
+		else
+			treeptr->height = 0;
 	}
 
 	int max(int a, int b){
@@ -249,7 +278,19 @@ using namespace std;
 	 
 
 bool AVLTree::isBalanced (AVLNode *node){
-	if(abs(node->leftP->height - node->rightP->height) > 1)
+	if(!node->leftP && !node->rightP)
+		return true;
+	else if(!node->leftP){
+		if(node->rightP->getHeight() > 0)
+			return false;
+		return true;
+	}
+	else if(!node->rightP){
+		if(node->leftP->getHeight() > 0)
+			return false;
+		return true;
+	}
+	else if(abs(node->leftP->height - node->rightP->height) > 1)
 		return false;
 	return true;
 }

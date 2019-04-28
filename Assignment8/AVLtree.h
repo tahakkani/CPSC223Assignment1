@@ -172,10 +172,11 @@ public:
 	//@usage: insertItem(root, theItem);
    void insertItem (AVLNode *& treeptr, const ItemType& newItem);
    void setHeight(AVLNode *treeptr);
-   Node* rotateWithLeftChild(Node* k2);
-   Node* rotateWithRightChild(Node* k2);
-   Node* doubleRotateWithLeftChild(Node* k3);
-   Node* doubleRotateWithRightChild(Node* k1);
+   int getBal(AVLNode *node) const;
+   AVLNode* rotateWithLeftP(AVLNode* k2);
+   AVLNode* rotateWithRightP(AVLNode* k1);
+   AVLNode* doubleRotateWithLeftP(AVLNode* k3);
+   AVLNode* doubleRotateWithRightP(AVLNode* k1);
 
 
 	//@ helper for Remove(const ItemType&)

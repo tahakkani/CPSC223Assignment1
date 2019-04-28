@@ -27,9 +27,9 @@ public:
    // post: the item of the node is empty and the kids are NULL
    // usage: newptr = new AVLNode();
    AVLNode (): leftP(NULL), rightP(NULL), height(0){}
-	
-	int getHeight(){
-		return height;
+   
+   int getHeight(){
+   	return height;
 	}
    
 private:
